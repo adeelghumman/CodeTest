@@ -1,0 +1,59 @@
+import React from 'react'
+
+
+const data = "HELLO {HOW} {YOU} "
+
+var array = [];
+
+
+const filterString = (init , bf)=>{
+    var length = data.length;
+    var wStrtoAdd = "";
+    var bracketat = 0;
+    var baraketFound = bf;
+    for (var i = init; i<length ; i++ ){
+        var currStr = data.charAt(i);
+
+     if(currStr ==="{" || currStr === "}"){
+        if (baraketFound=== 0){
+            array.push({type: "normal" , text:wStrtoAdd });
+            
+        }  
+        else {
+            array.push({type: "Bracket" , text:wStrtoAdd });
+            
+        }     
+           
+         bracketat = i;
+         if(i <length ) {
+             if(baraketFound=== 0){
+                baraketFound=1;
+                
+             }else{
+                baraketFound=0;
+             }
+
+            filterString(i+1 , baraketFound);
+         }
+
+         break;
+               
+     }else{
+        wStrtoAdd = wStrtoAdd +currStr;
+     } 
+     
+     
+    }
+    console.log(wStrtoAdd);
+    console.log(array);
+    console.log(bracketat);
+       
+}
+
+const Test = () => {
+    return (
+        <button onClick={()=>{filterString (0 , 0);}}> Filter String</button>
+    )
+}
+
+export default Test
